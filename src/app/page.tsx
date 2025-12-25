@@ -10,11 +10,12 @@ import ParallaxSection from "@/components/parallaxComponent/ParallaxSection";
 import ProjectsList from "@/components/projects/Projects";
 import About from "@/components/about/About";
 import Contact from "@/components/contact/Contact";
-import Hero  from "@/components/hero/Hero";
+import Hero from "@/components/hero/Hero";
 import CareerHistory from "@/components/careerHistory/page";
 import StaticParallax from "@/components/parallaxComponent/StaticParallax/StaticParallax";
 import FeatureOrbit from "@/components/parallaxComponent/featureOrbit/page";
 import VideoScrub from "@/components/parallaxComponent/videoScrub/page";
+import Deno from "@/components/parallaxComponent/deno/page";
 
 export default function Home() {
   const steps = [
@@ -40,6 +41,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      {/* <Deno /> */}
       <StaticParallax />
       <About />
       <FeatureOrbit />

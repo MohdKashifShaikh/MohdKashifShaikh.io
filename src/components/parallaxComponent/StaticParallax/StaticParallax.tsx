@@ -1,41 +1,61 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./staticParallax.module.scss";
 
 export default function StaticParallax() {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive scaling
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    offset: ["start start", "center center"],
   });
   // CODE MATRIX animations - extended reading time for better UX
-  // Stage 1: Animate in (0-0.2), Stage 2: PAUSE & grow (0.2-0.5), Stage 3: Extended reading time (0.5-0.95), Stage 4: Quick exit (0.95-1.0)
+  // Stage 1: Animate in (0-0.3), Stage 2: STATIONARY & ZOOM (0.3-0.8), Stage 3: Exit (0.8-1.0)
   // APPEAR - maximum visibility time for reading
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.95, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95], [0.85, 1, 1.2, 1.25]);
-  // VISUAL "LOCK" — extended stationary period for reading
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95, 1], [100, 0, 0, 0, -200]);
-  // 3D depth - minimal rotation, focus on readability
-  const rotateX = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95], [25, 0, 0, -3]);
-  // FLOATING ELEMENTS animations - extended stationary period
-  const float1Y = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95, 1], [100, 20, 20, 20, -50]);
-  const float2Y = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95, 1], [-80, -20, -20, -20, 60]);
-  const float3Y = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95, 1], [120, 30, 30, 30, -80]);
-  const floatRotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
-  // TEXT animations - appear only when codeMatrix starts exiting to avoid overlap
-  const titleOpacity = useTransform(scrollYProgress, [0.85, 0.9, 0.98, 1], [0, 1, 1, 0]);
-  const titleY = useTransform(scrollYProgress, [0.85, 0.9, 0.98, 1], [60, 0, 0, -40]);
-  const titleScale = useTransform(scrollYProgress, [0.85, 0.9], [0.8, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.85, 1], [0, 1, 1, 0]);
 
+  // Enhanced zoom on scroll - more pronounced effect
+  const maxScale = isMobile ? 1.12 : 1.2; // Increased for better zoom visibility
+  const scale = useTransform(scrollYProgress,[0, 0.25, 0.5, 0.75, 1],[0, 0.5, 0.7, maxScale, maxScale]);
+  // const scale = useTransform(scrollYProgress,[0, 0.25, 0.4, 0.75, 1],[0.85, 1, 1.1, maxScale, maxScale]);
+  // VISUAL "LOCK" — stay in viewport and zoom only
+  // const y = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [50, 0, 0, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95, 1], [100, 0, 0, 0, -200]);
+  // const rotateX = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [12, 0, 0, -3]);
+  // const rotateX = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.95], [25, 0, 0, -3]);
+    const rotateX = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [12, 0, 0, -3]);
+  // FLOATING ELEMENTS animations - extended stationary period
+  const float1Y = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [100, 20, 20, -50]);
+  const float2Y = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [-80, -20, -20, 60]);
+  const float3Y = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [120, 30, 30, -80]);
+  const floatRotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
+  // TEXT animations - appear when zoom starts for better visibility
+  const titleOpacity = useTransform(scrollYProgress, [0.4, 0.5, 0.85, 1], [0, 1, 1, 0]);
+  const titleY = useTransform(scrollYProgress, [0.4, 0.5, 0.85, 1], [40, 0, 0, -30]);
+  const titleScale = useTransform(scrollYProgress, [0.4, 0.5], [0.9, 1]);
+
+  // Subtle 3D rotation for depth - enhanced for zoom effect
   const codeSnippet = `// Portfolio Developer Profile
 import { Developer, Skills, Experience } from '@/types';
 import { createInnovation, buildExperience } from '@/utils';
 
 const developer: Developer = {
   name: "Mohd Kashif Shaikh",
-  role: "Senior Software Developer",
+  role: "Lead Software Engineer",
   location: "India",
   experience: "4+ Years",
   
@@ -43,8 +63,8 @@ const developer: Developer = {
   skills: {
     frontend: ["React", "Next.js", "Redux Toolkit", "TypeScript", "Tailwind"],
     backend: ["Node.js", "Express", "MongoDB", "NestJS"],
-    tools: ["Postman", "Vite", "Git", "GitHub", "Docker", "Framer Motion", "GSAP"],
-    unit testing: ["Vitest", "Jest"]
+    tools: ["Postman", "Vite", "Git", "GitHub", "Docker", "CI/CD"],
+    unit testing: ["Vitest", "Jest", "React Testing Library"]
   },
   
   // Professional Mission
@@ -70,9 +90,9 @@ const developer: Developer = {
   
   // Current Focus
   currentlyWorking: [
-    "Advanced React Patterns & NextJS",
-    "Performance Optimization",
+    "Advanced NextJS",
     "3D Web Experiences", 
+    "Performance Optimization",
     "Accessibility Standards"
   ]
 };
@@ -101,10 +121,9 @@ export default developer;`;
           className={styles.codeMatrix}
           style={{
             opacity,
-            scale,
             rotateX,
+            scale,
             y,
-            // width,
           }}
         >
           <div className={styles.codeWindow}>

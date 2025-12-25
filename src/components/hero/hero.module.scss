@@ -5,7 +5,6 @@
   width: 100%;
   height: 100vh;
   //   overflow: hidden;
-  // padding-top: 18rem;
   .stars {
     position: absolute;
     inset: 0;
@@ -57,11 +56,11 @@
         color: var(--muted);
       }
       .actions {
-        position: absolute;
         margin-top: 1.25rem;
         display: flex;
         gap: 0.75rem;
         &.dark_theme {
+          position: absolute;
           z-index: 100;
         }
         > .github_icon {
@@ -82,24 +81,18 @@
       justify-content: center;
       position: absolute;
       right: 0;
-      .avatar{
+      .avatar {
         width: 60rem;
         height: 55rem;
       }
-
-      .profile {
-        display: flex;
-        justify-content: center;
-        img {
-          width: 20rem;
-          height: 20rem;
-          // height: 30rem;
-          //   object-fit: cover;
-          //   border-radius: 14px;
-          //   box-shadow: $shadow-lg;
-          //   border: 6px solid rgba(255,255,255,0.03);
-        }
-      }
+      // .profile {
+      //   display: flex;
+      //   justify-content: center;
+      //   img {
+      //     width: 20rem;
+      //     height: 20rem;
+      //   }
+      // }
     }
   }
 }
@@ -111,5 +104,30 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column !important;
+    justify-content: space-between;
+  }
+  .left {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh !important;
+    h1 {
+      font-size: 1.5rem !important;
+    }
+    .actions {
+      margin-top: 11rem !important;
+    }
+  }
+  .right {
+    .avatar {
+      opacity: 0.2;
+    }
   }
 }

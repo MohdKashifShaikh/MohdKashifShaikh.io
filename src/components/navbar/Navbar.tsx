@@ -9,15 +9,15 @@ import { Disclosure } from "@headlessui/react";
 export const Navbar = () => {
   const navigation = [
     {
-      link: "#",
+      link: "/projects",
       title: "Projects",
     },
     {
-      link: "#about",
+      link: "/about",
       title: "About",
     },
     {
-      link: "#",
+      link: "/contact",
       title: "Contact",
     },
   ];

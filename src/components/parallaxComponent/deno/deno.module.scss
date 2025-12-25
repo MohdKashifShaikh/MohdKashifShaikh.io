@@ -1,0 +1,316 @@
+.main {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.cursor {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, rgba(120, 119, 198, 0.8), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+  backdrop-filter: blur(10px);
+}
+
+.cursor:hover {
+  transform: scale(1.5);
+}
+
+.orbsContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(40px);
+  box-shadow: 0 8px 32px rgba(120, 119, 198, 0.3);
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+
+  &:nth-child(1) { width: 200px; height: 200px; top: 20%; left: 10%; animation-delay: 0s; }
+  &:nth-child(2) { width: 150px; height: 150px; top: 60%; right: 20%; animation-delay: -2s; }
+  &:nth-child(3) { width: 180px; height: 180px; top: 10%; right: 10%; animation-delay: -1s; }
+  &:nth-child(4) { width: 120px; height: 120px; bottom: 20%; left: 20%; animation-delay: -3s; }
+  &:nth-child(5) { width: 100px; height: 100px; top: 40%; left: 60%; animation-delay: -4s; }
+  &:nth-child(6) { width: 140px; height: 140px; bottom: 40%; right: 30%; animation-delay: -5s; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.heroContent {
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.role {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 8px;
+  color: #a855f7;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+
+  &[data-scroll="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.name {
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s ease;
+
+  span {
+    display: block;
+  }
+
+  &[data-scroll="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bio {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease 0.2s;
+
+  &[data-scroll="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease 0.4s;
+
+  &[data-scroll="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ctaButton, .ctaSecondary {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.ctaButton {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.6);
+  }
+}
+
+.ctaSecondary {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.projects {
+  padding: 10rem 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, white, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.projectCard {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+  animation-delay: var(--delay);
+
+  &[data-scroll="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardImage {
+  position: relative;
+  height: 300px;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 10, 20, 0.95), rgba(168, 85, 247, 0.2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .techTags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+
+    span {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+  }
+
+  a {
+    color: #a855f7;
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
+
+.cardImage:hover .cardOverlay {
+  opacity: 1;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding: 4rem 20px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+
+  .stat {
+    text-align: center;
+
+    span:first-child {
+      display: block;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    span:last-child {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
